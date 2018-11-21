@@ -21,7 +21,7 @@ blurred = cv2.GaussianBlur(gray, (5,5), 0)
 #blurred = cv2.medianBlur(gray, 5)
 
 # apply Edge Detection algorithm developed from morphological gradient filter
-edgedetect = edged.thresho(blurred)
+edgedetect = edged.thresho(cv2.bitwise_not(blurred))
 orig_edged = edgedetect.copy()
 
 # find the contours in the edged image, keeping only the
@@ -55,7 +55,7 @@ ret,th1 = cv2.threshold(dst,127,255,cv2.THRESH_BINARY)
 th3 = cv2.adaptiveThreshold(dst,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
             cv2.THRESH_BINARY,7,4)
 ret2,th4 = cv2.threshold(dst,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-dst = cv2.bitwise_not((dst > th4).astype("uint8") * 255)
+dst = cv2.bitwise_not((dst > th1).astype("uint8") * 255)
 
 
 cv2.imwrite("mode_dark.jpg", th1)
